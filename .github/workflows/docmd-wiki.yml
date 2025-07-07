@@ -51,7 +51,7 @@ jobs:
 
       - name: Run script to update wiki
         run: |
-          cd ../wiki
+          cd wiki
           git add .
           git commit -m "Updated wiki with a new page"
           git push
