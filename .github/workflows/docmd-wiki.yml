@@ -27,25 +27,21 @@ jobs:
 
       - name: Install docmd
         run: pip install docmd
-
+        
+      - name: Check existing paths
+        run: |
+          pwd
+          ls
+          
       - name: Create MD files from PyPlaque docstrings
         run: |
-          ls
           cd PyPlaque
           pip install -e .
-          mkdir -p docs
-          docmd PyPlaque.experiment --out docs
-          docmd PyPlaque.phenotypes --out docs
-          docmd PyPlaque.specimen --out docs
-          docmd PyPlaque.utils --out docs
-          docmd PyPlaque.view --out docs
-
-      - name: Copy generated docs to wiki
-        run: |
-          cd docs
-          cp -v *.md ../../wiki/
-          cd ../
-          rm -rf docs
+          docmd PyPlaque.experiment --out ../wiki
+          docmd PyPlaque.phenotypes --out ../wiki
+          docmd PyPlaque.specimen --out ../wiki
+          docmd PyPlaque.utils --out ../wiki
+          docmd PyPlaque.view --out ../wiki
 
       - name: Run script to update wiki
         run: |
