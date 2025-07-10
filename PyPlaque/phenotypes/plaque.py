@@ -98,7 +98,7 @@ class Plaque:
       float: The calculated eccentricity value of the plaque.
     """
     # find the contours
-    contours,_ = cv2.findContours(self.mask, cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    contours,_ = cv2.findContours(self.mask.astype("uint8"), cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
     ecc = 0
     # select the first contour that has more than 5 points and fit an ellipse based on that

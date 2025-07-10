@@ -25,7 +25,11 @@ class PlaquesImageRGB(PlaquesMask):
     TypeError: If `name` is not a string, if `image` is not a 3D numpy array, or if `plaques_mask` 
     is not a 2D numpy array.
   """
-  def __init__(self, name, image, plaques_mask, use_picks=False):
+  def __init__(self, 
+               name, 
+               image, 
+               plaques_mask, 
+               use_picks=False):
     # check types
     if not isinstance(name, str):
       raise TypeError("Image name atribute must be a str")
