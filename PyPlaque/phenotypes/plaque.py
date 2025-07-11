@@ -98,6 +98,7 @@ class Plaque:
       float: The calculated eccentricity value of the plaque.
     """
     # find the contours
+    # change here - assert type as unsigned 8-bit int
     contours,_ = cv2.findContours(self.mask.astype("uint8"), cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
     ecc = 0
