@@ -26,10 +26,10 @@ class PlaquesImageRGB(PlaquesMask):
     is not a 2D numpy array.
   """
   def __init__(self, 
-               name, 
-               image, 
-               plaques_mask, 
-               use_picks=False):
+               name: str, 
+               image: np.ndarray, 
+               plaques_mask: np.ndarray, 
+               use_picks:bool=False):
     # check types
     if not isinstance(name, str):
       raise TypeError("Image name atribute must be a str")
