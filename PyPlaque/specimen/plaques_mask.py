@@ -4,8 +4,8 @@ from matplotlib.patches import Circle
 from skimage.measure import label, regionprops
 from skimage.segmentation import clear_border
 
-from PyPlaque.phenotypes import Plaque
-from PyPlaque.utils import centroid, picks_area
+from ..phenotypes import Plaque
+from ..utils import centroid, picks_area
 
 
 class PlaquesMask:

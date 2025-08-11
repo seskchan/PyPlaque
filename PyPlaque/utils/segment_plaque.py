@@ -4,7 +4,7 @@ import skimage
 from scipy import ndimage as ndi
 from skimage import measure
 
-from PyPlaque.utils import remove_background, picks_area
+from ..utils import remove_background, picks_area
 
 
 def get_all_plaque_regions(image,threshold,plq_connect):

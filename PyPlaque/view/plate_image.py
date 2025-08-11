@@ -6,7 +6,7 @@ import numpy as np
 from skimage.measure import label, regionprops
 from skimage.segmentation import clear_border
 
-from PyPlaque.utils import picks_area
+from ..utils import picks_area
 
 
 class PlateImage:

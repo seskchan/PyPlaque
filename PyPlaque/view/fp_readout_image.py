@@ -2,9 +2,9 @@ import numpy as np
 import re
 from skimage import measure
 
-from PyPlaque.utils import get_plaque_mask
-from PyPlaque.view import PlaqueObjectReadout
-from PyPlaque.utils import picks_area
+from ..utils import get_plaque_mask
+from ..view import PlaqueObjectReadout
+from ..utils import picks_area
 
 
 class WellImageReadout:

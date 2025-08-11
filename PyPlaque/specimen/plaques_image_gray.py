@@ -1,7 +1,7 @@
 import numpy as np
 
-from PyPlaque.specimen import PlaquesMask
-from PyPlaque.utils import fixed_threshold
+from ..specimen import PlaquesMask
+from ..utils import fixed_threshold
 
 
 class PlaquesImageGray(PlaquesMask):

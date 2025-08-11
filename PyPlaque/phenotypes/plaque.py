@@ -3,7 +3,7 @@ import numpy as np
 from skimage.measure import label, regionprops
 
 
-from PyPlaque.utils import check_numbers, picks_area, picks_perimeter
+from ..utils import check_numbers, picks_area, picks_perimeter
 
 
 class Plaque:

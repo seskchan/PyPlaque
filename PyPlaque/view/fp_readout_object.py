@@ -3,7 +3,7 @@ import numpy as np
 import re
 import skimage
 
-from PyPlaque.utils import picks_area, picks_perimeter
+from ..utils import picks_area, picks_perimeter
 
 class PlaqueObjectReadout:
     """
