@@ -7,7 +7,7 @@ from skimage.exposure import adjust_gamma
 from tqdm.auto import tqdm
 import warnings
 
-from PyPlaque.specimen import PlaquesWell, PlaquesImageGray, PlaquesImageRGB
+from ..specimen import PlaquesWell, PlaquesImageGray, PlaquesImageRGB
 try:
   from PIL import Image as pil_image
 except ImportError:
@@ -331,10 +331,14 @@ class StainAgnostic:
     image_files = sorted(image_files)
 
     if all_grayscale:
+      # Forced casting PIL.Image.image objective to np.array because of CV2 processing 
+      # read_from_path output PIL.Image.Image
       img_list = [np.asarray(self.read_from_path(f,color_mode="grayscale")) 
                                                     for f in tqdm(image_files, desc="Loading Grayscale Image")]
     else:
-      img_list = [self.read_from_path(f) for f in tqdm(image_files, desc="Loading RGB Image")]
+      # Assuming f already has image.convert("RGB") not grayscale or "RGBA" (alpha as transparency)
+      img_list = [np.asarray(self.read_from_path(f)) for f in tqdm(image_files, desc="Loading RGB Image")]
+      #(np.asarray(self.read_from_path(f, dtype=np.float32)) / 255)[:,:,:3]
 
     if read_mask:
       if file_pattern:
@@ -347,7 +351,8 @@ class StainAgnostic:
         mask_list = [np.asarray(self.read_from_path(f,color_mode="grayscale")) 
                                                     for f in tqdm(mask_files, desc="Loading Grayscale Masks")]
       else:
-        mask_list = [self.read_from_path(f,color_mode="grayscale") for f in tqdm(mask_files, desc="Loading RGB Masks")]
+        # This is incompete or is RGB mask grayscale
+        mask_list = [np.asarray(self.read_from_path(f,color_mode="grayscale")) for f in tqdm(mask_files, desc="Loading RGB Masks")]
     else:
       # generate masks at runtime from images using params
       img_gadjusted_list = [adjust_gamma(img, 
@@ -367,8 +372,8 @@ class StainAgnostic:
                                       str(i//self.params['stain_agnostic']['ncols'])+","+
                                       str(i%self.params['stain_agnostic']['ncols']),
                                   image=img_gadjusted_list[i],
-                                  plaques_mask=None
-                                  ).plaques_mask
+                                  threshold=self.params['stain_agnostic']['threshold'],
+                                  sigma=self.params['stain_agnostic']['sigma']).plaques_mask
                           for i in tqdm(range(len(img_list)), desc="Generating Masks - (2) RGB")]
 
     self.well_dict[d]['img'] = img_list

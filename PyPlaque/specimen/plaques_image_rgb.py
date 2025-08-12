@@ -1,7 +1,7 @@
 import numpy as np
 
-from ..specimen import PlaquesMask
-from ..utils import fixed_threshold
+from PyPlaque.specimen import PlaquesMask
+from PyPlaque.utils import fixed_threshold
 
 class PlaquesImageRGB(PlaquesMask):
   """
@@ -46,6 +46,7 @@ class PlaquesImageRGB(PlaquesMask):
       plaques_mask = fixed_threshold(image, threshold, sigma) # mask:RGB(x,y,3) #gaussian()/normalisation implemented along each axis
       # Compression
       # Avg Pooling
+      plaques_mask = np.average(plaques_mask, axis=-1)
 
       self.plaques_mask = plaques_mask
     else:
@@ -56,8 +57,16 @@ class PlaquesImageRGB(PlaquesMask):
     #super().__init__(name, plaques_mask, use_picks) in python3
     self.image = image
 
+# Test Cases
 if __name__ == __name__:
-  test = np.random.rand(256,256,3)
-  test_obj = PlaquesImageRGB(name="test",image=test, sigma=1)
+  
+  height = 200
+  width = 300
+  channels = 3 # For RGB
+
+  test = np.random.randint(0, 256, size=(height, width, channels), dtype=np.uint8)
+  test_obj = PlaquesImageRGB(name="test",image=test, threshold=.5, sigma=1)
   print(f"original: {test}")
+  print(f"new shape: {test.shape}")
   print(f"new: {test_obj.plaques_mask}")
+  print(f"new shape: {test_obj.plaques_mask.shape}")
