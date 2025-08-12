@@ -43,11 +43,12 @@ class PlaquesImageRGB(PlaquesMask):
         raise TypeError("Mask atribute must be a 2D numpy array")
       self.plaques_mask = plaques_mask
     elif threshold and sigma:
-      plaques_mask = fixed_threshold(image, threshold, sigma) # mask:RGB(x,y,3) #gaussian()/normalisation implemented along each axis
       # Compression
       # Avg Pooling
-      plaques_mask = np.average(plaques_mask, axis=-1)
-
+      image = np.average(image, axis=-1)/255 #downscale to match grayscale
+      #print(f"intermediate: {image}")
+      plaques_mask = fixed_threshold(image, threshold, sigma) # mask:RGB(x,y,3) #gaussian()/normalisation implemented along each axis
+      #print(f"intermediate2: {plaques_mask}")
       self.plaques_mask = plaques_mask
     else:
       raise ValueError("Either mask or fixed threshold must be provided")
@@ -70,3 +71,4 @@ if __name__ == __name__:
   print(f"new shape: {test.shape}")
   print(f"new: {test_obj.plaques_mask}")
   print(f"new shape: {test_obj.plaques_mask.shape}")
+  print(f"sum: {np.sum(test_obj.plaques_mask)}")
