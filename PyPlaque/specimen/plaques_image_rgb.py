@@ -1,7 +1,7 @@
 import numpy as np
 
-from PyPlaque.specimen import PlaquesMask
-from PyPlaque.utils import fixed_threshold
+from ..specimen import PlaquesMask
+from ..utils import fixed_threshold
 
 class PlaquesImageRGB(PlaquesMask):
   """
@@ -45,7 +45,7 @@ class PlaquesImageRGB(PlaquesMask):
     elif threshold and sigma:
       # Compression
       # Avg Pooling
-      image = np.average(image, axis=-1)/255 #downscale to match grayscale
+      image = np.max(image, axis=-1)/255 #downscale to match grayscale
       #print(f"intermediate: {image}")
       plaques_mask = fixed_threshold(image, threshold, sigma) # mask:RGB(x,y,3) #gaussian()/normalisation implemented along each axis
       #print(f"intermediate2: {plaques_mask}")

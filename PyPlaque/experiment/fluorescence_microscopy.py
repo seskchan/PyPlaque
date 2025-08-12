@@ -8,7 +8,7 @@ import tifffile as TIFF
 from tqdm.auto import tqdm
 import warnings
 
-from PyPlaque.utils import get_plaque_mask, remove_artifacts, remove_background
+from ..utils import get_plaque_mask, remove_artifacts, remove_background
 
 try:
   from PIL import Image as pil_image

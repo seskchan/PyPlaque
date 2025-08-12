@@ -1,7 +1,7 @@
 import numpy as np
 
-from PyPlaque.phenotypes import Plaque
-from PyPlaque.utils import check_numbers
+from ..phenotypes import Plaque
+from ..utils import check_numbers
 
 
 class FluorescencePlaque(Plaque):

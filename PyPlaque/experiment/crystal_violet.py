@@ -7,7 +7,7 @@ from skimage.exposure import adjust_gamma
 from tqdm.auto import tqdm
 import warnings
 
-from PyPlaque.specimen import PlaquesWell, PlaquesImageGray
+from ..specimen import PlaquesWell, PlaquesImageGray
 try:
   from PIL import Image as pil_image
 except ImportError:
