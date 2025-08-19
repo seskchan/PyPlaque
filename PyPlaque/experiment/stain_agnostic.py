@@ -58,10 +58,12 @@ class StainAgnostic:
                 'gamma': 1.32,
                 'nrows': 2,
                 'ncols': 3,
-                'min_area': 100,
-                'max_area': 200,
-                'sigma': 0.4,
-                'threshold': 0.25,
+                'min_area': 500,
+                'max_area': 7000,
+                'sigma': 1,
+                'threshold': 0.7,
+                'grayscale': False,
+                'colourchannel': None # r,g,b = [1,2,3]
         }
       }
 
@@ -373,7 +375,8 @@ class StainAgnostic:
                                       str(i%self.params['stain_agnostic']['ncols']),
                                   image=img_gadjusted_list[i],
                                   threshold=self.params['stain_agnostic']['threshold'],
-                                  sigma=self.params['stain_agnostic']['sigma']).plaques_mask
+                                  sigma=self.params['stain_agnostic']['sigma'],
+                                  colourchannel=self.params['stain_agnostic']["colourchannel"]).plaques_mask
                           for i in tqdm(range(len(img_list)), desc="Generating Masks - (2) RGB")]
 
     self.well_dict[d]['img'] = img_list

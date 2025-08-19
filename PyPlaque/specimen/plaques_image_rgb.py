@@ -20,6 +20,7 @@ class PlaquesImageRGB(PlaquesMask):
 
     use_picks (bool, optional): Indicates whether to use pick-based area calculation. 
                               Defaults to False.
+    colorchannel: (int, optional): Indicates whether a particular color {0:r, 1:g, 2:b} is to be filtered out.
 
   Raises:
     TypeError: If `name` is not a string, if `image` is not a 3D numpy array, or if `plaques_mask` 
@@ -31,7 +32,8 @@ class PlaquesImageRGB(PlaquesMask):
                plaques_mask: np.ndarray | None = None, 
                threshold = None,
                sigma = 5,
-               use_picks:bool=False):
+               use_picks:bool = False,
+               colourchannel: int | None = None):
     # check types
     if not isinstance(name, str):
       raise TypeError("Image name atribute must be a str")
@@ -43,10 +45,17 @@ class PlaquesImageRGB(PlaquesMask):
         raise TypeError("Mask atribute must be a 2D numpy array")
       self.plaques_mask = plaques_mask
     elif threshold and sigma:
-      # Compression
-      # Avg Pooling
-      image = np.max(image, axis=-1)/255 #downscale to match grayscale
-      #print(f"intermediate: {image}")
+      if colourchannel:
+        # selective remove the dominant / confusing colour
+        # since it is inverted, that of other colour will be amplified. 
+        # so taking it down on inverted image further amplified the dominant colour 
+        image[:,:,colourchannel] = 0
+
+      else:
+        # Compression
+        # Avg Pooling
+        image = np.max(image, axis=-1)/255 #downscale to match grayscale
+        #print(f"intermediate: {image}")
       plaques_mask = fixed_threshold(image, threshold, sigma) # mask:RGB(x,y,3) #gaussian()/normalisation implemented along each axis
       #print(f"intermediate2: {plaques_mask}")
       self.plaques_mask = plaques_mask
@@ -59,7 +68,7 @@ class PlaquesImageRGB(PlaquesMask):
     self.image = image
 
 # Test Cases
-if __name__ == __name__:
+if __name__ == "__main__":
   
   height = 200
   width = 300
